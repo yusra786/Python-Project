@@ -52,3 +52,8 @@ outcome_by_income = df.groupby('Income_Level')['Heart_Attack_Outcome'].value_cou
 print("\nHeart Attack Outcome Counts by Income Level:")
 print(outcome_by_income)
 
+# Replace 'Male' with 'M' and 'Female' with 'F' in the 'Gender' column using loc
+df.loc[df['Gender'] == 'Male', 'Gender'] = 'M'
+df.loc[df['Gender'] == 'Female', 'Gender'] = 'F'
+
+
