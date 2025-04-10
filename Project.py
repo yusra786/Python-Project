@@ -81,6 +81,30 @@ df['BMI_Category'] = df['BMI'].apply(categorize_bmi)
 
 print(df[['Cholesterol_Level', 'Blood_Pressure', 'BMI', 'BMI_Category']].head())
 
+# Descriptive Statistics 
+print("\n Cholesterol Level")
+print("Mean:", df["Cholesterol_Level"].mean())
+print("Median:", df["Cholesterol_Level"].median())
+print("Mode:", df["Cholesterol_Level"].mode()[0])
+print("Count:", df["Cholesterol_Level"].count())
+print("Max:", df["Cholesterol_Level"].max())
+print("Min:", df["Cholesterol_Level"].min())
+
+print("\n Blood Pressure")
+print("Mean:", df["Blood_Pressure"].mean())
+print("Median:", df["Blood_Pressure"].median())
+print("Mode:", df["Blood_Pressure"].mode()[0])
+print("Count:", df["Blood_Pressure"].count())
+print("Max:", df["Blood_Pressure"].max())
+print("Min:", df["Blood_Pressure"].min())
+
+print("\n Age ")
+print("Mean:", df["Age"].mean())
+print("Median:", df["Age"].median())
+print("Mode:", df["Age"].mode()[0])
+print("Count:", df["Age"].count())
+print("Max:", df["Age"].max())
+print("Min:", df["Age"].min())
 
 
 
