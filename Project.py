@@ -56,4 +56,31 @@ print(outcome_by_income)
 df.loc[df['Gender'] == 'Male', 'Gender'] = 'M'
 df.loc[df['Gender'] == 'Female', 'Gender'] = 'F'
 
+# Add a new column:
+#1. Adding Is_Senior_Citizen coloumn
+df['Is_Senior_Citizen'] = df['Age'] >= 60
+
+print("\nAdded 'Is_Senior_Citizen' column (True if Age >= 60):")
+print(df[['Age', 'Is_Senior_Citizen']].head())
+
+#2. Adding BMI Column
+df['BMI'] = df.apply(lambda row: (row['Cholesterol_Level'] / 2 + row['Blood_Pressure'] / 3) / (1.75 ** 2), axis=1)
+
+#3. Adding BMI Category Column
+def categorize_bmi(bmi):
+    if bmi < 18.5:
+        return 'Underweight'
+    elif bmi < 24.9:
+        return 'Normal weight'
+    elif bmi < 29.9:
+        return 'Overweight'
+    else:
+        return 'Obesity'
+
+df['BMI_Category'] = df['BMI'].apply(categorize_bmi)
+
+print(df[['Cholesterol_Level', 'Blood_Pressure', 'BMI', 'BMI_Category']].head())
+
+
+
 
