@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
-df = pd.read_csv(r'C:\Users\yusra\Downloads\Pyhton project\heart_attack_predictions.csv')
+import matplotlib.pyplot as plt
+import seaborn as sns
+df = pd.read_csv(r"C:\Users\yusra\Downloads\heart_attack_predictions (1).csv")
 #Step 1:Initial Data Exploration
 print("Initial Data Exploration")
 print("First 5 rows of the dataset:")
@@ -118,7 +120,7 @@ print("Observation: The age distribution of patients is visualized.")
 
 
 # Step 9: Correlation Matrix
-print("\n=== Correlation Matrix ===")
+print("\n Correlation Matrix ")
 
 numeric_df = df_cleaned.select_dtypes(include=[np.number])
 correlation_matrix = numeric_df.corr()
@@ -139,4 +141,34 @@ plt.ylabel('Variables')
 plt.show()
 print("Observation: Boxplots help identify outliers in continuous variables.")
 
+# Step 11: Pairplot for Feature Relationships
+sns.pairplot(df_cleaned, hue='Heart_Attack_Outcome', vars=['Age', 'Cholesterol_Level', 'Max_Heart_Rate_Achieved', 'Triglycerides'])
+plt.title('Pairplot of Selected Features')
+plt.show()
+
+# Step 12: Outlier Detection using IQR
+
+def detect_outliers_iqr(data, column):
+    Q1 = data[column].quantile(0.25)
+    Q3 = data[column].quantile(0.75) 
+    IQR = Q3 - Q1  
+    lower = Q1 - 1.5 * IQR 
+    upper = Q3 + 1.5 * IQR 
+    outliers = data[(data[column] < lower) | (data[column] > upper)]
+    print(f"{column}: {len(outliers)} outliers") 
+    return outliers
+
+numerical_columns = df.select_dtypes(include=['int64', 'float64']).columns
+
+outliers_dict = {}
+
+for col in numerical_columns:
+    outliers = detect_outliers_iqr(df, col)
+    outliers_dict[col] = outliers 
+
+# Step 13: Final Summary of EDA
+print("\n Final Summary of EDA ")
+print("Number of records after cleaning:", outliers.shape[0])
+print("Number of features:", outliers.shape[1])
+print("EDA completed successfully.")
 
