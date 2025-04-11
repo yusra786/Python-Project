@@ -118,8 +118,30 @@ plt.grid()
 plt.show()
 print("Observation: The age distribution of patients is visualized.")
 
+# Step 9: Scatter Plot
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='Age', y='Cholesterol_Level', hue='Heart_Attack_Outcome', data=df_cleaned)
+plt.title('Scatter Plot of Age vs Cholesterol Level')
+plt.xlabel('Age')
+plt.ylabel('Cholesterol Level')
+plt.grid()
+plt.show()
+print("Observation: The scatter plot shows the relationship between Age and Cholesterol Level, colored by Heart Attack Outcome.")
 
-# Step 9: Correlation Matrix
+# Step 10: Line Plot 
+# Calculate average cholesterol level by age
+avg_chol_by_age = df_cleaned.groupby('Age')['Cholesterol_Level'].mean().reset_index()
+
+plt.figure(figsize=(10, 6))
+sns.lineplot(x='Age', y='Cholesterol_Level', data=avg_chol_by_age, marker='o')
+plt.title('Line Plot of Average Cholesterol Level by Age')
+plt.xlabel('Age')
+plt.ylabel('Average Cholesterol Level')
+plt.grid()
+plt.show()
+print("Observation: The line plot shows the trend of average Cholesterol Level as Age increases.")
+
+# Step 11: Correlation Matrix
 print("\n Correlation Matrix ")
 
 numeric_df = df_cleaned.select_dtypes(include=[np.number])
@@ -131,7 +153,7 @@ plt.title('Correlation Matrix')
 plt.show()
 print("Observation: The correlation matrix shows relationships between numeric features.")
 
-# Step 10: Boxplots for Continuous Variables
+# Step 12: Boxplots for Continuous Variables
 
 plt.figure(figsize=(12, 8))
 sns.boxplot(data=df_cleaned[['Age', 'Cholesterol_Level', 'Max_Heart_Rate_Achieved', 'Thalassemia']], orient='h')
@@ -141,32 +163,30 @@ plt.ylabel('Variables')
 plt.show()
 print("Observation: Boxplots help identify outliers in continuous variables.")
 
-# Step 11: Pairplot for Feature Relationships
+# Step 13: Pairplot for Feature Relationships
 sns.pairplot(df_cleaned, hue='Heart_Attack_Outcome', vars=['Age', 'Cholesterol_Level', 'Max_Heart_Rate_Achieved', 'Triglycerides'])
 plt.title('Pairplot of Selected Features')
 plt.show()
 
-# Step 12: Outlier Detection using IQR
+# Step 14: Outlier Detection using IQR
 
 def detect_outliers_iqr(data, column):
     Q1 = data[column].quantile(0.25)
-    Q3 = data[column].quantile(0.75) 
-    IQR = Q3 - Q1  
-    lower = Q1 - 1.5 * IQR 
-    upper = Q3 + 1.5 * IQR 
+    Q3 = data[column].quantile(0.75)
+    IQR = Q3 - Q1
+    lower = Q1 - 1.5 * IQR
+    upper = Q3 + 1.5 * IQR
     outliers = data[(data[column] < lower) | (data[column] > upper)]
-    print(f"{column}: {len(outliers)} outliers") 
+    print(f"{column}: {len(outliers)} outliers")
     return outliers
-
-numerical_columns = df.select_dtypes(include=['int64', 'float64']).columns
+numerical_columns = df_cleaned.select_dtypes(include=['int64', 'float64']).columns
 
 outliers_dict = {}
-
 for col in numerical_columns:
-    outliers = detect_outliers_iqr(df, col)
-    outliers_dict[col] = outliers 
-
-# Step 13: Final Summary of EDA
+    outliers = detect_outliers_iqr(df_cleaned, col)
+    outliers_dict[col] = outliers
+    
+# Step 15: Final Summary of EDA
 print("\n Final Summary of EDA ")
 print("Number of records after cleaning:", outliers.shape[0])
 print("Number of features:", outliers.shape[1])
