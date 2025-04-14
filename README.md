@@ -2,7 +2,7 @@ Heart Disease Dataset EDA Project
 This project aims to analyze and understand the factors contributing to heart disease, uncover patterns, and provide insights that can aid in future research or modeling efforts.
 
 📁 Files in this Repository
-EDA.ipynb – containing the complete EDA process.
+Project.py – containing the complete EDA process.
 heart_disease_data.csv – The dataset used for analysis.
 
 README.md – Project overview and documentation.
